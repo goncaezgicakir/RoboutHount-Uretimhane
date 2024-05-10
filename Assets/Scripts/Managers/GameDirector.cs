@@ -25,14 +25,20 @@ public class GameDirector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //oyun baþladýðýnda cursor gözükmesin
+        //oyun basladiginda cursor gozukmesin
         Cursor.lockState = CursorLockMode.Locked;
 
     }
 
     // Update is called once per frame
     void Update()
-    {   
+    {
+        //NOTE:
+        //•Transform üzerinden forward, -forward, right, -right ile
+        //yon degiskeni Vector3 alabiliriz.
+        //Transform degerinin y ekseni 0 tutulursa
+        //nesne tek düzlemde hareket ettirilebilir.
+
         //backward
         if (Input.GetKey(KeyCode.S))
         {
@@ -72,8 +78,8 @@ public class GameDirector : MonoBehaviour
         }
 
         //NOTE:
-        //GetMouseButtonDown(0) – sol click için, down tek sefer basmak için 
-        //GetMouseButtonDown(1) – sað click için, down tek sefer basmak için
+        //GetMouseButtonDown(0) – sol click icin, down tek sefer basmak icin 
+        //GetMouseButtonDown(1) – sag click icin, down tek sefer basmak icin
         if (Input.GetMouseButtonDown(0))
         {
             SpawnBullet();
@@ -86,15 +92,18 @@ public class GameDirector : MonoBehaviour
 
     private void SpawnBullet()
     {
+        //NOTE:
+        //Instantiate prefab kullanilarak oyun sahnesine yeni bir nesne eklemek
+        //icin kullanilan methoddur. Gerekliyse transform degeri de parametre olarak eklenebilir.
         var newBullet = Instantiate(bulletPrefab);
         newBullet.transform.position = bulletSpawnPoint.position;
         //NOTE:
-        //forward VEKTORU spawn pointe EKLENEREK bulletýn doðru yerden oluþmasý saðlanýr (vektor toplamayý düþün)
-        //eklemezsek sürekli sýfýra yakýn bir VEKTOR deðeri position olarak algýlanýr ve 0,0,0 yakýn bir yerden oluþur
+        //forward VEKTORU spawn pointe EKLENEREK bulletin dogru yerden olusmasi saglanir (vektor toplamayi dusun)
+        //eklemezsek surekli sifira yakin bir VEKTOR degeri position olarak algilanir ve 0,0,0 yakin bir yerden olusur
         newBullet.transform.LookAt(bulletSpawnPoint.position + bulletSpawnPoint.forward);
     }
 
-    //Methods
+
 
     void MovePlayer(Vector3 direction)
     {
@@ -109,9 +118,10 @@ public class GameDirector : MonoBehaviour
     void RotatePlayer()
     {
         //NOTE:
-        //Quaternion – Rotasyon yaparken belli bir noktaya göre rotasyon yapmamýz gerektiði için bir nokta
-        //3 boyutla(x,y,z) ile tanýmlanýrken 4. bir nokta da dönüþ ekseni olarak tanýmlanýr.
-        //Bu yapý için kullanýlan bir sýnýftýr.
+        //Quaternion – Rotasyon yaparken belli bir noktaya gore rotasyon yapmamiz gerektigi için bir nokta
+        //3 boyutla(x,y,z) ile tanýmlanirken 4. bir nokta da donus ekseni olarak tanimlanir.
+        //Bu yapi icin kullanilan bir siniftir.
+        //Euler acisi (x,y,z) axislerine göre rotasyon icin kullanilan acidir
         player.localRotation = Quaternion.Euler(-turn.y * mouseSensitivity, turn.x * mouseSensitivity, 0);
     }
 }

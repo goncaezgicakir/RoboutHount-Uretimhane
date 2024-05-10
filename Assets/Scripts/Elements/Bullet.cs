@@ -20,11 +20,11 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //NOTE:
-        //Inspectorda tanýmlanan Tag için comparision koþulu
+        //Inspectorda tanimlanan Tag icin comparision kosulu
         if (collision.gameObject.CompareTag("Enemy"))
         {
             //NOTE:
-            //bu þekilde ilgili obje sahneden kaldýrýlýcak
+            //bu sekilde ilgili obje sahneden kaldirilacak
             collision.gameObject.SetActive(false);
         }
         

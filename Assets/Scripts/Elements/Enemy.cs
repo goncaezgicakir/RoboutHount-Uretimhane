@@ -10,16 +10,15 @@ public class Enemy : MonoBehaviour
     public float enemySpeed;
 
     
-    // Update is called once per frame
     void Update()
     {
-        //yön vektörü
+        //oyuncu ve enemy arasýndaki mesafe vektoru
         var direction =  playerTransform.position - transform.position;
 
         //NOTE:
-        //aradaki farký hesaplayýp 0-1 arasýna çekerek yön vektörü elde eder
-        //bunu yapmazsak vektör büyüdükçe ileride hesaplayacaðýmýz hýz da büyür
-        //sabit bir deðer için normalized etmek gereklidir
+        //aradaki farki hesaplayip 0-1 arasina cekerek yon vektoru elde eder
+        //bunu yapmazsak vektor buyudukce ileride hesaplayacagimiz hiz da buyur
+        //sabit bir deger icin normalized etmek gereklidir
         var directionNormalized = direction.normalized;
 
         transform.position += directionNormalized * enemySpeed;
