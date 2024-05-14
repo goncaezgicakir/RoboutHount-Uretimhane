@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
+    
     public Transform playerTransform;
 
     public float enemySpeed;
 
-    
-    void Update()
+    //NOTE:
+    //oyun basladiktan sonra transform degeri enemy spawn edlidiginde 
+    //anlik olusur. bu nedenle assign etmek gerekir
+    public void StartEnemy(Transform pTransform)
+    {
+        playerTransform = pTransform;
+    }
+
+    private void Update()
     {
         //oyuncu ve enemy arasýndaki mesafe vektoru
         var direction =  playerTransform.position - transform.position;

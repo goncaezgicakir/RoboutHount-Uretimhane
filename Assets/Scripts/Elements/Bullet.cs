@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-
     public float bulletSpeed;
 
     private void Update()
@@ -12,7 +11,7 @@ public class Bullet : MonoBehaviour
         Move();
     }
 
-    void Move()
+    private void Move()
     {
         transform.position += transform.forward * bulletSpeed;
     }
@@ -24,8 +23,15 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             //NOTE:
-            //bu sekilde ilgili obje sahneden kaldirilacak
+            //bu sekilde ilgili obje(enemy) sahneden kaldirilacak
             collision.gameObject.SetActive(false);
+            //carpan mermiyi (kendisini) de sahneden kaldiralim
+            gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("MapObjects")){
+
+            //alakasiz bir yere carpan mermiyi (kendisini) de sahneden kaldiralim
+            gameObject.SetActive(false);
         }
         
     }
