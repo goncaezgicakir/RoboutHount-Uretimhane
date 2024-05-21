@@ -17,7 +17,10 @@ public class Player : MonoBehaviour
 
     public void MovePlayer(Vector3 direction)
     {
-        transform.position = transform.position + direction * playerSpeed;
+        //NOTE:
+        //time.deltaTime iki update arasinda gecen sureye esittir
+        //fps farketmeden her bilgisayarda ayni calismasi saglanir
+        transform.position = transform.position + direction * playerSpeed * Time.deltaTime;
     }
 
     public void MakePlayerJump()

@@ -6,15 +6,16 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public GameDirector gameDirector;
+    public Transform placeHolderParent;
     public Enemy enemyPrefab;
-    public int enemyCount;
     public List<Enemy> activeEnemies = new List<Enemy>();
 
-    private int waveCount;
-
-    private void Start()
+    public void GateTriggered()
     {
-        waveCount = 1;
+        foreach (Enemy enemy in activeEnemies)
+        {
+            enemy.StartMoving();
+        }
     }
 
     public void SpawnWaveDelayed(float delay)
@@ -29,30 +30,33 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnWave()
     {
-        //her yeni wavede daha fazla enemy oluþucak 10,20,30..
-        for(int i = 0; i < enemyCount*waveCount; i++)
+        foreach (Transform ph in placeHolderParent)
         {
-            SpawnEnemy(i);
+            SpawnEnemy(ph.position);
+            ph.GetComponent<MeshRenderer>().enabled = false;
         }
-        waveCount++;
     }
 
-    private void SpawnEnemy(int x)
+    private void SpawnEnemy(Vector3 position)
     {
-        var newEnemy = Instantiate(enemyPrefab);
-        //get a random circle offset as a vector3
-        var circleOffset = Random.onUnitSphere;
-        //create a new vector only with its x and z values
-        //because we dont want to use y axis
-        Vector3 offset = new Vector3(circleOffset.x, 0 , circleOffset.y);
-        //add this offset to player tarnsform in order to create a new enemy tarnsform position
-        //NOTE:
-        //20 degeri zorluk için
-        newEnemy.transform.position = gameDirector.playerHolder.transform.position +offset * 20;
+        var newEnemy = Instantiate(enemyPrefab);        
+        newEnemy.transform.position = position;
+
         //assign the transform value
         newEnemy.StartEnemy(gameDirector.playerHolder.transform, this);
         //yeni olusan enemy listede tut
         activeEnemies.Add(newEnemy);
+
+
+        /*
+
+        //get a random circle offset as a vector3
+        var circleOffset = Random.onUnitSphere;
+        //create a new vector only with its x and z values
+        //because we dont want to use y axis
+        Vector3 offset = new Vector3(circleOffset.x, 0, circleOffset.y);
+
+        */
     }
 
     public void EnemyDied(Enemy enemy)
@@ -60,17 +64,10 @@ public class EnemyManager : MonoBehaviour
         //ilgili enemy objesini enemyManagerdaki aktif enemy listesinden cikar
         activeEnemies.Remove(enemy);
 
-        //sahnede enemy kalmazsa yenilerini olusturuz
-        if (activeEnemies.Count <= 0)
-        {   
-            if(waveCount <= 3)
-            {
-                SpawnWaveDelayed(2);
-            }
-            else
-            {
-                gameDirector.LevelCompleted();
-            }
-        }
+       //tum enemyler olduyse artik diamond spawn edebiliriz
+       if(activeEnemies.Count == 0)
+       {
+            gameDirector.diamondManager.SpawnDiamonds();
+       }
     }
 }

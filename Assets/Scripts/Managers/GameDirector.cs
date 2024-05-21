@@ -7,6 +7,7 @@ public class GameDirector : MonoBehaviour
 {
     public InputManager inputManager;
     public EnemyManager enemyManager;
+    public DiamondManager diamondManager;
     public MainUI mainUI;
     public WinUI winUI;
 
@@ -43,10 +44,10 @@ public class GameDirector : MonoBehaviour
 
     public void StartGame()
     {
-        isGameStarted = true;
-        ingameControlsLocked = false;
         Cursor.lockState = CursorLockMode.Locked;
-        enemyManager.SpawnWaveDelayed(2);
+        isGameStarted = true;
+        enemyManager.SpawnWave();
+        ingameControlsLocked = false;
     }
 
     public void SpawnBullets()
@@ -82,4 +83,10 @@ public class GameDirector : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         winUI.Show();
     }    
+
+    public void DiamondCollected()
+    {   
+        
+         LevelCompleted();
+    }
 }
