@@ -9,22 +9,39 @@ public class Bullet : MonoBehaviour
     public float bulletLifeTime;
 
     private float _bulletStartTime;
+    private MeshRenderer _bulletMesh;
+    private SphereCollider _bulletCollider;
 
 
     private void Start()
     {
         _bulletStartTime = Time.time;
+        _bulletMesh = GetComponentInChildren<MeshRenderer>();
+        _bulletCollider =  GetComponent<SphereCollider>();
     }
 
     private void Update()
     {
-        Move();
-
         //bullet start time bulletLifeTime astiysa yok olmali
         if(Time.time - _bulletStartTime > bulletLifeTime)
         {
-           gameObject.SetActive(false);
+            DestroyBullet();
         }
+        else
+        {
+            Move();
+        }
+    }
+
+    private void DestroyBullet()
+    {
+        //NOTE:
+        //bulleta ait mesh ve colliderlar kapatýlýr
+        _bulletMesh.enabled = false;
+        _bulletCollider.enabled = false;
+        //NOTE:
+        //destroydan once biraz bekledik cunku bulletin taili(effect) da sureyle uyumlu olarak yok olmali
+        Destroy(gameObject, 1f);
     }
 
     private void Move()

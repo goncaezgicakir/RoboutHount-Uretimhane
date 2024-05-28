@@ -63,9 +63,16 @@ public class InputManager : MonoBehaviour
             //NOTE:
             //GetMouseButtonDown(0) – sol click icin, down tek sefer basmak icin 
             //GetMouseButtonDown(1) – sag click icin, down tek sefer basmak icin
+            //load shotgun
             if (Input.GetMouseButtonDown(0))
             {
-                gameDirector.SpawnBullets();
+                gameDirector.StartLoadingShotgun();
+            }
+            //stop loading shotgun
+            if (Input.GetMouseButtonUp(0))
+            {
+                gameDirector.StopLoadShotgun();
+                gameDirector.TrySpawnBullets();
             }
 
             //close the game
@@ -84,6 +91,18 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.P))
             {
                 gameDirector.enemyManager.SpawnWave();
+            }
+
+            //make player faster
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                gameDirector.playerHolder.speedMultiplier = 1.6f;
+            }
+
+            //make player slower
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                gameDirector.playerHolder.speedMultiplier = 1f;
             }
         }
     }

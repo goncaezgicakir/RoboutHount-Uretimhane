@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameDirector : MonoBehaviour
 {
     public InputManager inputManager;
     public EnemyManager enemyManager;
     public DiamondManager diamondManager;
+    public AudioManager audioManager;
     public MainUI mainUI;
     public WinUI winUI;
 
@@ -19,10 +21,16 @@ public class GameDirector : MonoBehaviour
     public Vector2 turn;
     public int bulletCount;
     public float maxSpread;
+    public float shotgunLoadTime;
     //NOTE:
     //default olarak boolean degeri false dur.
     public bool isGameStarted;
     public bool ingameControlsLocked;
+    public bool isShotgunLoaded;
+
+    //NOTE:
+    //Coroutine degiskeni ile coroutine methodu resultina yeniden erisebilriz
+    private Coroutine _loadShotgunCoroutine;
 
     private void Start()
     {
@@ -50,18 +58,59 @@ public class GameDirector : MonoBehaviour
         ingameControlsLocked = false;
     }
 
-    public void SpawnBullets()
+    public void StartLoadingShotgun()
+    {   
+        //NOTE:
+        //coroutine cagirilirken StartCoroutine kullanilmasi zorunludur
+        //normal methodlar gibi cagiramayiz
+        StartCoroutine(LoadShotGunCoroutine());
+    }
+
+    //NOTE:
+    //coroutine ne kadar zamanda donecegini yield return ýle anlar
+    //burada ek olarak saniye de verilebilir 
+    IEnumerator LoadShotGunCoroutine()
     {
-        for(int i = 0; i < bulletCount; i++)
+        audioManager.PlayShotgunReloadSFX();
+        //NOTE:
+        //3 saniye sonra method calismaya baslar 
+        yield return new WaitForSeconds(shotgunLoadTime);
+        isShotgunLoaded = true;
+    }
+
+    public void StopLoadShotgun()
+    {
+        if (_loadShotgunCoroutine != null)
         {
-            SpawnBullet();
+            //NOTE:
+            //Coroutine methodunu calismaya basladi ama durdurmak istedik
+            //o nedenle o methodu temsil eden coroutine degiskeni uzerinden StopCoroutine ile methodu durdurduk
+            StopCoroutine(_loadShotgunCoroutine);
         }
+
+        audioManager.StopShotgunReloadSFX();
+    }
+
+    public void TrySpawnBullets()
+    {
+        if ((isShotgunLoaded))
+        {
+
+            for (int i = 0; i < bulletCount; i++)
+            {
+                SpawnBullet();
+            }
+            playerHolder.PushPlayerBack();
+            audioManager.PlayShotgunShootSFX();
+        }
+
+        isShotgunLoaded = false;
     }
     public void SpawnBullet()
     {
         //create randomly geenrated Vector3 for a spread of the bullet 
         var spread = new Vector3(Random.Range(-maxSpread, maxSpread),
-                                 0,
+                                 Random.Range(-maxSpread * .4f, maxSpread * .4f),
                                  Random.Range(-maxSpread, maxSpread));
         //NOTE:
         //Instantiate prefab kullanilarak oyun sahnesine yeni bir nesne eklemek

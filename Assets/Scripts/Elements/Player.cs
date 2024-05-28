@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public float playerSpeed;
     public float jumpForce;
     public Rigidbody playerRb;
+    public float recoilForce;
+    public float speedMultiplier;
 
     //NOTE:
     //Mesh bu gameObject icin hacim alanini belirtir
@@ -20,7 +22,7 @@ public class Player : MonoBehaviour
         //NOTE:
         //time.deltaTime iki update arasinda gecen sureye esittir
         //fps farketmeden her bilgisayarda ayni calismasi saglanir
-        transform.position = transform.position + direction * playerSpeed * Time.deltaTime;
+        transform.position = transform.position + direction * playerSpeed * Time.deltaTime * speedMultiplier;
     }
 
     public void MakePlayerJump()
@@ -37,5 +39,12 @@ public class Player : MonoBehaviour
         //Euler acisi (x,y,z) axislerine göre rotasyon icin kullanilan acidir
         var mouseSensitivity = gameDirector.inputManager.mouseSensitivity;
         playerMesh.localRotation = Quaternion.Euler(-turn.y * mouseSensitivity, turn.x * mouseSensitivity, 0);
+    }
+
+    public void PushPlayerBack()
+    {
+        //NOTE:
+        //playerin shotgundan dolayi geri tepmesini temsil etmek icin backward force ekledik
+        playerRb.AddForce(-playerMesh.transform.forward * recoilForce);
     }
 }
