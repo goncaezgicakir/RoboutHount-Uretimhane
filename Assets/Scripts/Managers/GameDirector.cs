@@ -17,6 +17,7 @@ public class GameDirector : MonoBehaviour
     public Player playerHolder;
     public Transform bulletSpawnPoint;
     public Bullet bulletPrefab;
+    public Transform cameraTransform;
     
     public Vector2 turn;
     public int bulletCount;
@@ -46,6 +47,11 @@ public class GameDirector : MonoBehaviour
         {
             turn.x += Input.GetAxis("Mouse X");
             turn.y += Input.GetAxis("Mouse Y");
+            //NOTE:
+            //Clamp ile y eksenindeki donusu sinirlandirdik
+            //(degerleri deneyerek print() ile debug ederek editorden bulduk)
+            turn.y = Mathf.Clamp(turn.y, -7f, 25f);
+
             playerHolder.RotatePlayer(turn);
         }
     }

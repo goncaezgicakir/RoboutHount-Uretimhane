@@ -4,11 +4,20 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 public class Bullet : MonoBehaviour
-{
+{   
+
+    //NOTE:
+    //Header ile Unity editor uzerinde degiskenleri bu isimli grup altinda toparlar
+    [Header("Properties")]
     public float bulletSpeed;
     public float bulletLifeTime;
+    public int damage;
+    public float pushPower;
 
     private float _bulletStartTime;
+
+
+    [Header("Elements")]
     private MeshRenderer _bulletMesh;
     private SphereCollider _bulletCollider;
 
@@ -61,7 +70,10 @@ public class Bullet : MonoBehaviour
             //NOTE:
             //su anda sadece collider elimizde bize objenþn kendisi lazým
             //ona bu sekilde ulasabiliriz
-            other.GetComponent<Enemy>().EnemyGodHit();
+            //NOTE:
+            //EnemyGotHit ikinci parametresi bulletin forward yonune gore belirlenmeli
+            other.GetComponent<Enemy>().EnemyGodHit(damage, transform.forward, pushPower);
+
             //carpan mermiyi (kendisini) de sahneden kaldiralim
             gameObject.SetActive(false);
         }
