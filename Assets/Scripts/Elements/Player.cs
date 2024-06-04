@@ -1,21 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {   
     public GameDirector gameDirector;
+
+    public Weapon weapon;
 
     public float playerSpeed;
     public float jumpForce;
     public Rigidbody playerRb;
     public float recoilForce;
     public float speedMultiplier;
+    public int startHealth;
+    private int _currentHealth;
 
     //NOTE:
     //Mesh bu gameObject icin hacim alanini belirtir
     public Transform playerMesh; 
 
+    public void StartPlayer()
+    {
+        _currentHealth = startHealth;
+    }
+
+
+    public void PlayerGotHit(int damage)
+    {
+
+    }
+
+    private void ReduceHealth(int damage)
+    {
+        _currentHealth -= damage;
+
+        if(_currentHealth <= 0 )
+        {
+            gameDirector.LevelFailed();
+        }
+
+    }
 
     public void MovePlayer(Vector3 direction)
     {

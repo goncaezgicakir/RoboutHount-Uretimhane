@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - MapObjects
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

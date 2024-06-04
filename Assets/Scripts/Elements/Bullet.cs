@@ -75,12 +75,18 @@ public class Bullet : MonoBehaviour
             other.GetComponent<Enemy>().EnemyGodHit(damage, transform.forward, pushPower);
 
             //carpan mermiyi (kendisini) de sahneden kaldiralim
-            gameObject.SetActive(false);
+            DestroyBullet();
+        }
+        else if (other.CompareTag("EnemyBullet"))
+        {
+            //carpan mermiyi (kendisini) ve ?
+            Destroy(other.gameObject);
+            DestroyBullet();
         }
         else if (other.CompareTag("MapObjects"))
         {
             //alakasiz bir yere carpan mermiyi (kendisini) de sahneden kaldiralim
-            gameObject.SetActive(false);
+            DestroyBullet();
         }
     }
 

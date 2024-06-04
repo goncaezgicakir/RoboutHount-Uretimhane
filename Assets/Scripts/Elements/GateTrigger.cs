@@ -10,7 +10,7 @@ public class GateTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            enemyManager.GateTriggered();
+            enemyManager.AlertEnemies();
             //oyuncu bir kere gate triggerdan gectikten sonra
             //box collider componenti kaldirilir
             GetComponent<BoxCollider>().enabled = false;

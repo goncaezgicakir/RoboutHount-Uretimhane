@@ -10,8 +10,10 @@ public class GameDirector : MonoBehaviour
     public EnemyManager enemyManager;
     public DiamondManager diamondManager;
     public AudioManager audioManager;
+
     public MainUI mainUI;
     public WinUI winUI;
+    public FailUI failUI;
 
     public Transform enemy;
     public Player playerHolder;
@@ -38,6 +40,7 @@ public class GameDirector : MonoBehaviour
         ingameControlsLocked = true;
         mainUI.Show();
         winUI.Hide();
+        failUI.Hide();
     }
 
     // method called once per frame
@@ -62,6 +65,7 @@ public class GameDirector : MonoBehaviour
         isGameStarted = true;
         enemyManager.SpawnWave();
         ingameControlsLocked = false;
+        playerHolder.StartPlayer();
     }
 
     public void StartLoadingShotgun()
@@ -82,6 +86,7 @@ public class GameDirector : MonoBehaviour
         //3 saniye sonra method calismaya baslar 
         yield return new WaitForSeconds(shotgunLoadTime);
         isShotgunLoaded = true;
+        playerHolder.weapon.ChangeTrajectoryMaterialsToLoaded();
     }
 
     public void StopLoadShotgun()
@@ -107,10 +112,12 @@ public class GameDirector : MonoBehaviour
                 SpawnBullet();
             }
             playerHolder.PushPlayerBack();
+            enemyManager.AlertEnemies();
             audioManager.PlayShotgunShootSFX();
         }
 
         isShotgunLoaded = false;
+        playerHolder.weapon.ChangeTrajectoryMaterialsToUnloaded();
     }
     public void SpawnBullet()
     {
@@ -143,5 +150,12 @@ public class GameDirector : MonoBehaviour
     {   
         
          LevelCompleted();
+    }
+
+    public void LevelFailed()
+    {
+        ingameControlsLocked = true;
+        Cursor.lockState = CursorLockMode.None;
+        failUI.Show();  
     }
 }

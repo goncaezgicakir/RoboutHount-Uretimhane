@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
     public Enemy enemyPrefab;
     public List<Enemy> activeEnemies = new List<Enemy>();
 
-    public void GateTriggered()
+    public void AlertEnemies()
     {
         foreach (Enemy enemy in activeEnemies)
         {
