@@ -5,6 +5,9 @@ using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
+    [Header("Manaagers")]
+    public Settings settings;
+
     [Header("Elements")]
     public GameDirector gameDirector;
     public Weapon weapon;
@@ -14,8 +17,6 @@ public class Player : MonoBehaviour
     public Rigidbody playerRb;
 
     [Header("Properties")]
-    public float playerSpeed;
-    public float jumpForce;
     public float recoilForce;
     public float speedMultiplier;
     public int startHealth;
@@ -31,6 +32,13 @@ public class Player : MonoBehaviour
     public void PlayerGotHit(int damage)
     {
         ReduceHealth(damage);
+        gameDirector.healthBarUI.SetPlayerHealthBar(GetHealthRatio());
+        gameDirector.getHitUI.ShowDamageEffect();
+    }
+
+    public float GetHealthRatio()
+    {
+        return (float)_currentHealth / startHealth;
     }
 
     private void ReduceHealth(int damage)
@@ -49,12 +57,12 @@ public class Player : MonoBehaviour
         //NOTE:
         //time.deltaTime iki update arasinda gecen sureye esittir
         //fps farketmeden her bilgisayarda ayni calismasi saglanir
-        transform.position += direction * playerSpeed * Time.deltaTime * speedMultiplier;
+        transform.position += direction * settings.playerSpeed * Time.deltaTime * speedMultiplier;
     }
 
     public void MakePlayerJump()
     {
-        playerRb.AddForce(new Vector3(0, 1, 0) * jumpForce);
+        playerRb.AddForce(new Vector3(0, 1, 0) * settings.jumpForce);
     }
 
     public void RotatePlayer(Vector2 turn)

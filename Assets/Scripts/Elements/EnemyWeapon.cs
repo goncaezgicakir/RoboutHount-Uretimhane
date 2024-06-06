@@ -11,7 +11,6 @@ public class EnemyWeapon : MonoBehaviour
 
     [Header("Properties")]
     public List<Transform> shootPositions;
-    public float attackRate;
     private float _lastShootTime;
 
 
@@ -25,7 +24,7 @@ public class EnemyWeapon : MonoBehaviour
     {
         //NOTE:
         //bu sayede atislar arasýnda zaman gecmesi saglanir
-        if (Time.time - _lastShootTime > attackRate)
+        if (Time.time - _lastShootTime > _enemy.attackRate)
         {
             foreach (Transform sp in shootPositions)
             {

@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class WinUI : MonoBehaviour
 {
     [Header("Elements")]
     public GameDirector gameDirector;
+    public Image fillBar;
 
     public void Show()
     {
@@ -18,10 +20,8 @@ public class WinUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void LoadNextLevelButtonPressed()
+    public void SetPlayerHealthBar(float healthRatio)
     {
-        Hide();
-        //aktif sahne restart edilir
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        fillBar.fillAmount = healthRatio;
     }
 }

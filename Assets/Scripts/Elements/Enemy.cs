@@ -14,8 +14,10 @@ public enum EnemyState
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Elements")]
+    [Header("Managers")]
     private EnemyManager _enemyManager;
+
+    [Header("Elements")]
     public Transform playerTransform;
     private Rigidbody _enemyRb;
     public Transform leftWheel;
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Properties")]
     public float enemySpeed;
+    public float attackRate;
     public float wheelRotationSpeed;
     public bool isEnemyMoving;
     public int startHealth;
@@ -131,6 +134,19 @@ public class Enemy : MonoBehaviour
 
     }
 
+    private void KillEnemy()
+    {
+        //enemymanagera haber verilir ki sahneden yeterli enemy var mi diye
+        _enemyManager.EnemyDied(this);
+        enemyHealthBar.Hide();
+        gameObject.SetActive(false);
+
+        //NOTE:
+        //enemy patlama efekti ekledik
+        //burada transfrom yere yakýn oldugu icin biraz yukarý bir vektor ekledik
+        _enemyManager.gameDirector.fXManager.PlayExplosionFX(transform.position + Vector3.up);
+    }
+
     private void ReduceHealth(int damage)
     {
         _currentHealth -= damage;
@@ -140,14 +156,6 @@ public class Enemy : MonoBehaviour
             KillEnemy();
         }
 
-    }
-
-    private void KillEnemy()
-    {
-        //enemymanagera haber verilir ki sahneden yeterli enemy var mi diye
-        _enemyManager.EnemyDied(this);
-        enemyHealthBar.Hide();
-        gameObject.SetActive(false);
     }
 
     private void UpdateHealthBar()

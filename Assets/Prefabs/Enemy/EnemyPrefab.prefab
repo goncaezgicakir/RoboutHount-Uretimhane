@@ -144,6 +144,7 @@ MonoBehaviour:
   enemyState: 0
   enemyWeapon: {fileID: 5750393097181901752}
   enemySpeed: 1
+  attackRate: 1
   wheelRotationSpeed: 2
   isEnemyMoving: 0
   startHealth: 10
@@ -295,7 +296,6 @@ MonoBehaviour:
   shootPositions:
   - {fileID: 8746804429455813561}
   - {fileID: 4121720016385738800}
-  attackRate: 1
 --- !u!4 &3231522075781324843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4832031578413854, guid: 4efdc095f88074e53a4f28617077b108,

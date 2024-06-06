@@ -12,12 +12,25 @@ public class InputManager : MonoBehaviour
 
     [Header("Properties")]
     public float mouseSensitivity;
+    public Vector2 turn;
 
 
     private void Update()
     {
         if (!gameDirector.ingameControlsLocked)
         {
+            if (gameDirector.isGameStarted)
+            {
+                turn.x += Input.GetAxis("Mouse X");
+                turn.y += Input.GetAxis("Mouse Y");
+                //NOTE:
+                //Clamp ile y eksenindeki donusu sinirlandirdik
+                //(degerleri deneyerek print() ile debug ederek editorden bulduk)
+                turn.y = Mathf.Clamp(turn.y, -7f, 25f);
+
+                gameDirector.playerHolder.RotatePlayer(turn);
+            }
+
             //NOTE:
             //•Transform üzerinden forward, -forward, right, -right ile
             //yon degiskeni Vector3 alabiliriz.
@@ -68,24 +81,30 @@ public class InputManager : MonoBehaviour
             //load shotgun
             if (Input.GetMouseButtonDown(0))
             {
-                gameDirector.StartLoadingShotgunCoroutine();
+                gameDirector.playerHolder.weapon.StartLoadingShotgunCoroutine();
             }
             //stop loading shotgun
             if (Input.GetMouseButtonUp(0))
             {
-                gameDirector.StopLoadShotgunCoroutine();
-                gameDirector.TrySpawnBullets();
+                gameDirector.playerHolder.weapon.StopLoadShotgunCoroutine();
+                gameDirector.playerHolder.weapon.TrySpawnBullets();
             }
 
             //close the game
-            if (Input.GetKeyDown(KeyCode.F5))
+            if (Input.GetKeyDown(KeyCode.F1))
             {
                 //open the mainUI when the game is closed
                 gameDirector.mainUI.Show();
+                Cursor.lockState = CursorLockMode.None;
+
+            }
+            //close the game
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
                 //NOTE:
                 //aktif sahne restart edilir
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                //oyun basladiginda cursor aktif olsun
+                //cursor aktif olsun
                 Cursor.lockState = CursorLockMode.None;
             }
 
