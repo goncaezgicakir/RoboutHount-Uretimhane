@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [Header("Elements")] 
     public GameDirector gameDirector;
     public Transform placeHolderParent;
     public Enemy enemyPrefab;
+
+    [Header("Properties")]
     public List<Enemy> activeEnemies = new List<Enemy>();
 
     public void AlertEnemies()

@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class CameraCollision : MonoBehaviour
 {
+    
+    [Header("Properties")]
+    //NOTE:
+    //degerler sahen uzerinde gozlemlenerek set edildi
     public float minDistance = 1.0f;
     public float maxDistance = 6.0f;
     public float smooth = 10.0f;
-
+    
     //NOTE:
     //filmlerde kullanilan camera holder (dolly) gibi
     Vector3 dollyDir;
     public Vector3 dollyDirAdjusted;
     public float distance;
+
 
     private void Awake()
     {
@@ -25,7 +30,6 @@ public class CameraCollision : MonoBehaviour
     {   
         //kameranýn gitmek istedigi nokta yon vektoru ve maks distance carpimi ile elde edilir
         Vector3 desiredCameraPos = transform.parent.TransformPoint(dollyDir * maxDistance);
-
         RaycastHit hit;
         
         //kamera bir objeye çarpýyorsa playera göre yeniden mesafelendir (kisaltir)
@@ -46,10 +50,13 @@ public class CameraCollision : MonoBehaviour
         transform.localPosition = Vector3.Lerp(transform.localPosition,
                                                 dollyDir * distance,
                                                 Time.deltaTime * smooth);
-
+        /*
+         
         //NOTE:
         //Unity icinde ekranda isin cizmeye yarar
         //oyun icinde degil sadece editorde gozukur
         Debug.DrawRay(transform.position, transform.parent.position, Color.green);
+
+        */
     }
 }

@@ -4,22 +4,19 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 public class Bullet : MonoBehaviour
-{   
-
+{
     //NOTE:
     //Header ile Unity editor uzerinde degiskenleri bu isimli grup altinda toparlar
-    [Header("Properties")]
-    public float bulletSpeed;
-    public float bulletLifeTime;
-    public int damage;
-    public float pushPower;
-
-    private float _bulletStartTime;
-
-
     [Header("Elements")]
     private MeshRenderer _bulletMesh;
     private SphereCollider _bulletCollider;
+
+    [Header("Properties")]
+    public float bulletSpeed;
+    public float bulletLifeTime;
+    public float pushPower;
+    public int damage;
+    private float _bulletStartTime;
 
 
     private void Start()
@@ -50,7 +47,7 @@ public class Bullet : MonoBehaviour
         _bulletCollider.enabled = false;
         //NOTE:
         //destroydan once biraz bekledik cunku bulletin taili(effect) da sureyle uyumlu olarak yok olmali
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 2f);
     }
 
     private void Move()
@@ -79,7 +76,7 @@ public class Bullet : MonoBehaviour
         }
         else if (other.CompareTag("EnemyBullet"))
         {
-            //carpan mermiyi (kendisini) ve ?
+            //carpan mermiyi (kendisini) ve carpistigi objeyi kaldiralim
             Destroy(other.gameObject);
             DestroyBullet();
         }

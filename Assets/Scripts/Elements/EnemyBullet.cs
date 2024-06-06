@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
+    [Header("Elements")]
+    private MeshRenderer _bulletMesh;
+    private SphereCollider _bulletCollider;
+
     [Header("Properties")]
     public float bulletSpeed;
     public float bulletLifeTime;
@@ -11,10 +15,6 @@ public class EnemyBullet : MonoBehaviour
 
     private float _bulletStartTime;
 
-
-    [Header("Elements")]
-    private MeshRenderer _bulletMesh;
-    private SphereCollider _bulletCollider;
 
     private void Start()
     {
@@ -44,7 +44,7 @@ public class EnemyBullet : MonoBehaviour
         _bulletCollider.enabled = false;
         //NOTE:
         //destroydan once biraz bekledik cunku bulletin taili(effect) da sureyle uyumlu olarak yok olmali
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 2f);
     }
 
     private void Move()

@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour
 {
+    [Header("Elements")]
+    public EnemyBullet enemyBulletPrefab;
     private Enemy _enemy;
 
-    public EnemyBullet enemyBulletPrefab;
+
+    [Header("Properties")]
     public List<Transform> shootPositions;
     public float attackRate;
-
     private float _lastShootTime;
+
+
     public void StartEnemyWeapon(Enemy enemy)
     {
         _enemy = enemy;
     }
-
 
    
     public void TryShoot()

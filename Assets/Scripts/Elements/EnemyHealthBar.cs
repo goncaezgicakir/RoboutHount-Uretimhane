@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealthBar : MonoBehaviour
-{   
+{
+    [Header("Elements")]
     private GameDirector _gameDirector;
-
     public Transform fillParent;
     public GameObject healthBarBackground;
 
@@ -22,19 +22,22 @@ public class EnemyHealthBar : MonoBehaviour
     {
         _gameDirector = gameDirector;
     }
+
     public void Show()
     {
         healthBarBackground.SetActive(true);
     }
+
     public void Hide()
     {
         healthBarBackground.SetActive(false);
     }
+    
     public void SetHealthRatio(float ratio)
     {   
         //NOTE:
         //Health bar sadece x ekseninde scale edilmeli
-        fillParent.transform.localScale = new Vector3 (ratio, 1, 1);
+        fillParent.localScale = new Vector3 (ratio, 1, 1);
     }
 
    

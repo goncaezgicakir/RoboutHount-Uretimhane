@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Diamond : MonoBehaviour
 {
-
+    [Header("Elements")]
     private GameDirector _gameDirector;
 
     public void StartDiamond(GameDirector gameDirector)

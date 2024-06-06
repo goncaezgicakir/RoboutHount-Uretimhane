@@ -4,22 +4,23 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
-{   
+{
+    [Header("Elements")]
     public GameDirector gameDirector;
-
     public Weapon weapon;
+    //NOTE:
+    //Mesh bu gameObject icin sahnedeki hacim alanini belirtir
+    public Transform playerMesh;
+    public Rigidbody playerRb;
 
+    [Header("Properties")]
     public float playerSpeed;
     public float jumpForce;
-    public Rigidbody playerRb;
     public float recoilForce;
     public float speedMultiplier;
     public int startHealth;
     private int _currentHealth;
-
-    //NOTE:
-    //Mesh bu gameObject icin hacim alanini belirtir
-    public Transform playerMesh; 
+   
 
     public void StartPlayer()
     {
@@ -29,7 +30,7 @@ public class Player : MonoBehaviour
 
     public void PlayerGotHit(int damage)
     {
-
+        ReduceHealth(damage);
     }
 
     private void ReduceHealth(int damage)
@@ -48,7 +49,7 @@ public class Player : MonoBehaviour
         //NOTE:
         //time.deltaTime iki update arasinda gecen sureye esittir
         //fps farketmeden her bilgisayarda ayni calismasi saglanir
-        transform.position = transform.position + direction * playerSpeed * Time.deltaTime * speedMultiplier;
+        transform.position += direction * playerSpeed * Time.deltaTime * speedMultiplier;
     }
 
     public void MakePlayerJump()

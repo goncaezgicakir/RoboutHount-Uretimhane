@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 
 public class AudioManager : MonoBehaviour
 {
+    [Header("Elements")]
     public AudioSource shotgunReloadAS;
     public AudioSource shotgunShootAS;
     public AudioSource metalImpactAS;

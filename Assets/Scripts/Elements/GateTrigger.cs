@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class GateTrigger : MonoBehaviour
 {
+    [Header("Elements")]
     public EnemyManager enemyManager;
+
+
+    private void Start()
+    {
+        GetComponent<MeshRenderer>().enabled = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

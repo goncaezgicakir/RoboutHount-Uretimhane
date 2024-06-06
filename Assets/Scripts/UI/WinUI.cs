@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class WinUI : MonoBehaviour
 {
+    [Header("Elements")]
     public GameDirector gameDirector;
 
     public void Show()

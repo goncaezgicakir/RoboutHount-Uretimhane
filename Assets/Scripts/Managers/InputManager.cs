@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
+    [Header("Elements")]
     public GameDirector gameDirector;
     public Transform playerMesh;
 
+
+    [Header("Properties")]
     public float mouseSensitivity;
 
 
-    // Update is called once per frame
     private void Update()
     {
         if (!gameDirector.ingameControlsLocked)
@@ -66,12 +68,12 @@ public class InputManager : MonoBehaviour
             //load shotgun
             if (Input.GetMouseButtonDown(0))
             {
-                gameDirector.StartLoadingShotgun();
+                gameDirector.StartLoadingShotgunCoroutine();
             }
             //stop loading shotgun
             if (Input.GetMouseButtonUp(0))
             {
-                gameDirector.StopLoadShotgun();
+                gameDirector.StopLoadShotgunCoroutine();
                 gameDirector.TrySpawnBullets();
             }
 

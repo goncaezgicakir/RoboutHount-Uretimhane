@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class DiamondManager : MonoBehaviour
 {
+    [Header("Elements")]
     public GameDirector gameDirector;
-    public Transform diamondPlaceHolderParent;
     public Diamond diamondPrefab;
+    public Transform diamondPlaceHolderParent;
+
 
     private void Start()
     {

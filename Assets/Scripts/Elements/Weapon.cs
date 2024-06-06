@@ -5,9 +5,11 @@ using DG.Tweening;
 
 public class Weapon : MonoBehaviour
 {
+    [Header("Elements")] 
     public Material trajectoryLoadedMaterial;
     public Material trajectoryUnloadedMaterial;
 
+    [Header("Properties")]
     public List<MeshRenderer> trajectoryMeshRenderers;
 
     public void ChangeTrajectoryMaterialsToLoaded()
@@ -26,7 +28,6 @@ public class Weapon : MonoBehaviour
 
     public void ChangeTrajectoryMaterialsToUnloaded()
     {
-
         foreach (var mr in trajectoryMeshRenderers)
         {
             mr.material = trajectoryUnloadedMaterial;

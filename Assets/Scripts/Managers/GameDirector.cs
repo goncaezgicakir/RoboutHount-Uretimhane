@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 
 public class GameDirector : MonoBehaviour
 {
+    [Header("Elements")]
     public InputManager inputManager;
     public EnemyManager enemyManager;
     public DiamondManager diamondManager;
@@ -20,7 +21,8 @@ public class GameDirector : MonoBehaviour
     public Transform bulletSpawnPoint;
     public Bullet bulletPrefab;
     public Transform cameraTransform;
-    
+
+    [Header("Properties")]
     public Vector2 turn;
     public int bulletCount;
     public float maxSpread;
@@ -30,10 +32,10 @@ public class GameDirector : MonoBehaviour
     public bool isGameStarted;
     public bool ingameControlsLocked;
     public bool isShotgunLoaded;
-
     //NOTE:
     //Coroutine degiskeni ile coroutine methodu resultina yeniden erisebilriz
     private Coroutine _loadShotgunCoroutine;
+
 
     private void Start()
     {
@@ -68,12 +70,12 @@ public class GameDirector : MonoBehaviour
         playerHolder.StartPlayer();
     }
 
-    public void StartLoadingShotgun()
+    public void StartLoadingShotgunCoroutine()
     {   
         //NOTE:
         //coroutine cagirilirken StartCoroutine kullanilmasi zorunludur
         //normal methodlar gibi cagiramayiz
-        StartCoroutine(LoadShotGunCoroutine());
+        _loadShotgunCoroutine =  StartCoroutine(LoadShotGunCoroutine());
     }
 
     //NOTE:
@@ -89,7 +91,7 @@ public class GameDirector : MonoBehaviour
         playerHolder.weapon.ChangeTrajectoryMaterialsToLoaded();
     }
 
-    public void StopLoadShotgun()
+    public void StopLoadShotgunCoroutine()
     {
         if (_loadShotgunCoroutine != null)
         {
@@ -106,7 +108,6 @@ public class GameDirector : MonoBehaviour
     {
         if ((isShotgunLoaded))
         {
-
             for (int i = 0; i < bulletCount; i++)
             {
                 SpawnBullet();
@@ -119,6 +120,7 @@ public class GameDirector : MonoBehaviour
         isShotgunLoaded = false;
         playerHolder.weapon.ChangeTrajectoryMaterialsToUnloaded();
     }
+    
     public void SpawnBullet()
     {
         //create randomly geenrated Vector3 for a spread of the bullet 
@@ -144,18 +146,20 @@ public class GameDirector : MonoBehaviour
         ingameControlsLocked = true;
         Cursor.lockState = CursorLockMode.None;
         winUI.Show();
-    }    
-
-    public void DiamondCollected()
-    {   
-        
-         LevelCompleted();
     }
 
     public void LevelFailed()
     {
         ingameControlsLocked = true;
         Cursor.lockState = CursorLockMode.None;
-        failUI.Show();  
+        failUI.Show();
     }
+    
+    public void DiamondCollected()
+    {   
+        
+         LevelCompleted();
+    }
+
+    
 }

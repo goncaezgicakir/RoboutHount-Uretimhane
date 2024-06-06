@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
     public float shootDistance;
 
     
-
     //NOTE:
     //oyun basladiktan sonra transform degeri enemy spawn edlidiginde 
     //anlik olusur. bu nedenle assign etmek gerekir
@@ -45,9 +44,8 @@ public class Enemy : MonoBehaviour
         _enemyRb = GetComponent<Rigidbody>();
 
         enemyHealthBar.StartEnemyHealthBar(enemyManager.gameDirector);
-        //enemy full health iken barin gozukemesine gerek yok
-        enemyHealthBar.Hide();
-
+        enemyHealthBar.Hide(); //enemy full health iken barin gozukemesine gerek yok
+        
         enemyWeapon.StartEnemyWeapon(this);
     }
 
@@ -61,7 +59,7 @@ public class Enemy : MonoBehaviour
         //NOTE:
         //Agent yapisi kullanildi (cok basit bir yapay zeka gibi karar mekanizmasi implement etmek icin)
 
-        //Logic Part
+        //Logic Part----
 
         //NOTE:
         //Playera uzaklik hesabý yaparken en son sonuc magnitude ile boyut haline getirilir
@@ -79,8 +77,7 @@ public class Enemy : MonoBehaviour
         }
 
        
-
-        //Action Part
+        //Action Part----
 
         if (enemyState == EnemyState.WalkingTowardsPlayer)
         {
@@ -88,6 +85,7 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyState == EnemyState.Shooting)
         {
+            transform.LookAt(playerTransform.position);
             enemyWeapon.TryShoot();
         }
     }
@@ -114,7 +112,7 @@ public class Enemy : MonoBehaviour
 
         //NOTE:
         //enemy robotunun y ekseninde tekerlek donusu
-        rightWheel.Rotate(0, wheelRotationSpeed, 0);
+        rightWheel.Rotate(0, -wheelRotationSpeed, 0);
         leftWheel.Rotate(0, wheelRotationSpeed, 0);
 
     }
@@ -122,10 +120,8 @@ public class Enemy : MonoBehaviour
     public void EnemyGodHit(int damage, Vector3 pushDir, float pushPower)
     {
         ReduceHealth(damage);
-
-        //bullet hit sound
-        _enemyManager.gameDirector.audioManager.PlayMetalImpactSFX();
         PushEnemyBack(pushDir, pushPower);
+        _enemyManager.gameDirector.audioManager.PlayMetalImpactSFX(); //bullet hit sound
         UpdateHealthBar();
     }
 
@@ -150,16 +146,14 @@ public class Enemy : MonoBehaviour
     {
         //enemymanagera haber verilir ki sahneden yeterli enemy var mi diye
         _enemyManager.EnemyDied(this);
-
-        gameObject.SetActive(false);
         enemyHealthBar.Hide();
+        gameObject.SetActive(false);
     }
 
     private void UpdateHealthBar()
     {
         if (GetHealthRatio() > 0)
         {
-
             enemyHealthBar.Show();
             enemyHealthBar.SetHealthRatio(GetHealthRatio());
         }
