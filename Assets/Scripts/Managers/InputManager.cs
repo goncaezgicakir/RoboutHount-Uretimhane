@@ -87,7 +87,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 gameDirector.playerHolder.weapon.StopLoadShotgunCoroutine();
-                gameDirector.playerHolder.weapon.TrySpawnBullets();
+                gameDirector.playerHolder.weapon.TryShoot();
             }
 
             //close the game

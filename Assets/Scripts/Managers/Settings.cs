@@ -5,6 +5,7 @@ using UnityEngine;
 public class Settings : MonoBehaviour
 {
     [Header("Properties")]
+    public bool shootingAlarmEnemies;
     public float playerSpeed;
     public float jumpForce;
     public float shotgunLoadTime;

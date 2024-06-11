@@ -59,7 +59,7 @@ public class Weapon : MonoBehaviour
         player.gameDirector.audioManager.StopShotgunReloadSFX();
     }
 
-    public void TrySpawnBullets()
+    public void TryShoot()
     {
        
         if ((isShotgunLoaded))
@@ -69,7 +69,10 @@ public class Weapon : MonoBehaviour
                 SpawnBullet();
             }
             player.PushPlayerBack();
-            player.gameDirector.enemyManager.AlertEnemies();
+
+            if (settings.shootingAlarmEnemies){
+                player.gameDirector.enemyManager.AlertEnemies();
+            }
             player.gameDirector.audioManager.PlayShotgunShootSFX();
         }
 

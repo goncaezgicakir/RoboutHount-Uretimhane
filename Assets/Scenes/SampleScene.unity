@@ -198,11 +198,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0661276422528d74d8c9894abad93242, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 8.086794
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.695598
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.695598
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0661276422528d74d8c9894abad93242, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0661276422528d74d8c9894abad93242, type: 3}
       propertyPath: m_LocalPosition.y
@@ -210,7 +218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0661276422528d74d8c9894abad93242, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.003
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0661276422528d74d8c9894abad93242, type: 3}
       propertyPath: m_LocalRotation.w
@@ -244,9 +252,53 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: stopAction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: 0661276422528d74d8c9894abad93242, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: 0661276422528d74d8c9894abad93242, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1707,7 +1759,7 @@ MonoBehaviour:
     type: 2}
   trajectoryUnloadedMaterial: {fileID: 2100000, guid: 3fea7de0c0455414198ffed8082952a9,
     type: 2}
-  muzzlePS: {fileID: 0}
+  muzzlePS: {fileID: 677722180}
   isShotgunLoaded: 0
   trajectoryMeshRenderers:
   - {fileID: 1400491897}
@@ -2495,6 +2547,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641897365}
   m_CullTransparentMesh: 1
+--- !u!198 &677722180 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19800004, guid: 0661276422528d74d8c9894abad93242,
+    type: 3}
+  m_PrefabInstance: {fileID: 37320750}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &714048073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5655,6 +5713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf955fc052e1de4dae9f34d35abf7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootingAlarmEnemies: 0
   playerSpeed: 10
   jumpForce: 300
   shotgunLoadTime: 0.35
