@@ -43,6 +43,9 @@ public class EnemyBullet : MonoBehaviour
         _bulletMesh.enabled = false;
         _bulletCollider.enabled = false;
         //NOTE:
+        //bullet tailleri ile birlikte yok edebilmek icin 
+        gameObject.SetActive(false);
+        //NOTE:
         //destroydan once biraz bekledik cunku bulletin taili(effect) da sureyle uyumlu olarak yok olmali
         Destroy(gameObject, 2f);
     }
@@ -60,6 +63,11 @@ public class EnemyBullet : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             other.GetComponent<Player>().PlayerGotHit(damage);
+            DestroyBullet();
+        }
+        if (other.CompareTag("MapObjects"))
+        {
+            DestroyBullet();
         }
     }
 }

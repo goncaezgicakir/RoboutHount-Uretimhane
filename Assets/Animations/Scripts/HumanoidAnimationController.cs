@@ -5,6 +5,7 @@ using UnityEngine;
 public class HumanoidAnimationController : MonoBehaviour
 {
     public Animator animator;
+    public GameDirector gameDirector;
     private bool isRunning;
 
     private void Start()
@@ -47,18 +48,35 @@ public class HumanoidAnimationController : MonoBehaviour
                 SetTriggerRunning(0);
             }
         }
+
+        //backward
+        else if (Input.GetKey(KeyCode.S))
+        {
+            //backward left
+            if (Input.GetKey(KeyCode.A))
+            {
+              SetTriggerRunning(0.375f);
+            }
+
+            //backward right
+            else if (Input.GetKey(KeyCode.D))
+            {
+                SetTriggerRunning(0.625f);
+            }
+
+            //only backward
+            else
+            {
+                SetTriggerRunning(0.5f);
+            }
+        }
+        
         else
         {
             //left
             if (Input.GetKey(KeyCode.A))
             {
                 SetTriggerRunning(0.25f);
-            }
-
-            //backward
-            if (Input.GetKey(KeyCode.S))
-            {
-                SetTriggerRunning(0.5f);
             }
 
             //right
@@ -69,6 +87,10 @@ public class HumanoidAnimationController : MonoBehaviour
 
         }
 
+        if(Input.GetKeyDown(KeyCode.Space) && gameDirector.playerHolder.isTouchingGround)
+        {
+            animator.SetTrigger("Jump");
+        }
         if(!isRunning)
         {
             animator.ResetTrigger("Run");

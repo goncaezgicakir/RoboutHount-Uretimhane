@@ -21,12 +21,52 @@ public class Player : MonoBehaviour
     public float speedMultiplier;
     public int startHealth;
     private int _currentHealth;
-   
+    public bool isTouchingGround;
 
     public void StartPlayer()
     {
         _currentHealth = startHealth;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Heal"))
+        {
+            GetHealed();
+            collision.gameObject.SetActive(false);
+        }
+    }
+
+    private void GetHealed()
+    {
+        //healthi arttir
+        _currentHealth += Mathf.RoundToInt(startHealth * .5f);
+
+        //current health start healthi asmamali
+        if(_currentHealth > startHealth){
+            _currentHealth = startHealth;
+        }
+
+        //health bar guncelle
+        gameDirector.healthBarUI.SetPlayerHealthBar(GetHealthRatio());
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("MapObjects"))
+        {
+            isTouchingGround = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("MapObjects"))
+        {
+            isTouchingGround = false;
+        }
+    }
+
+   
 
 
     public void PlayerGotHit(int damage)

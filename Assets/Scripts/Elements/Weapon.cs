@@ -15,6 +15,8 @@ public class Weapon : MonoBehaviour
     public Material trajectoryLoadedMaterial;
     public Material trajectoryUnloadedMaterial;
     public ParticleSystem muzzlePS;
+    public Transform handTransform;
+    public Vector3 handOffset;
     
     [Header("Properties")]
     public bool isShotgunLoaded;
@@ -24,7 +26,12 @@ public class Weapon : MonoBehaviour
     private Coroutine _loadShotgunCoroutine;
 
 
-
+    private void Update()
+    {
+        //NOTE:
+        //silah ile elin pozisyonlarini esitlemek icin
+        transform.position = handTransform.position + handOffset;
+    }
     public void StartLoadingShotgunCoroutine()
     {
         //NOTE:
@@ -122,7 +129,10 @@ public class Weapon : MonoBehaviour
         {
             mr.material = trajectoryUnloadedMaterial;
             mr.transform.DOKill();
-            mr.transform.localScale = new Vector3(1, 1, .17f);
+            //NOTE:
+            //Aim trajectory objesini scale degeriyle carparak baslangicta istenen scalede
+            //olamasini sagladik
+            mr.transform.localScale = Vector3.one * 0.5f;
         }
     }
 }

@@ -22,11 +22,11 @@ public class InputManager : MonoBehaviour
             if (gameDirector.isGameStarted)
             {
                 turn.x += Input.GetAxis("Mouse X");
-                turn.y += Input.GetAxis("Mouse Y");
+                //turn.y += Input.GetAxis("Mouse Y");
                 //NOTE:
                 //Clamp ile y eksenindeki donusu sinirlandirdik
                 //(degerleri deneyerek print() ile debug ederek editorden bulduk)
-                turn.y = Mathf.Clamp(turn.y, -7f, 25f);
+                //turn.y = Mathf.Clamp(turn.y, -7f, 25f);
 
                 gameDirector.playerHolder.RotatePlayer(turn);
             }
@@ -70,7 +70,7 @@ public class InputManager : MonoBehaviour
             }
 
             //jump
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && gameDirector.playerHolder.isTouchingGround)
             {
                 gameDirector.playerHolder.MakePlayerJump();
             }

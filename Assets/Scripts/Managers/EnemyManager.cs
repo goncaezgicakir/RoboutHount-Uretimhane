@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.Collections;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class EnemyManager : MonoBehaviour
     public GameDirector gameDirector;
     public Transform placeHolderParent;
     public Enemy enemyPrefab;
+    public PowerUp healPowerUpPrefab;
 
     [Header("Properties")]
     public List<Enemy> activeEnemies = new List<Enemy>();
@@ -72,5 +74,20 @@ public class EnemyManager : MonoBehaviour
        {
             gameDirector.diamondManager.SpawnDiamonds();
        }
+
+       //NOTE:
+       //yuzde 50 sans ile calýsýr
+       if(Random.value < .5f) {
+
+            SpawnPowerUp(enemy);
+       }
+    }
+
+    //power up olen enemynin pozisyonunda olusur
+    private void SpawnPowerUp(Enemy enemy)
+    {
+        var newPowerUp = Instantiate(healPowerUpPrefab);
+        newPowerUp.transform.position = enemy.transform.position + Vector3.up;
+        newPowerUp.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-200, 200), 200, Random.Range(-200, 200)));
     }
 }
