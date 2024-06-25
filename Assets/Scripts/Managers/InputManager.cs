@@ -125,6 +125,15 @@ public class InputManager : MonoBehaviour
             {
                 gameDirector.playerHolder.speedMultiplier = 1f;
             }
+
+            //open door
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (gameDirector.playerHolder.objectDetecter.isTouchingDoor)
+                {
+                    gameDirector.playerHolder.objectDetecter.OpenDoor();
+                }
+            }
         }
     }
 }

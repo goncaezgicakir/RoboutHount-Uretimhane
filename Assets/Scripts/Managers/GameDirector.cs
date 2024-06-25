@@ -20,6 +20,7 @@ public class GameDirector : MonoBehaviour
     public FailUI failUI;
     public HealthBarUI healthBarUI;
     public GetHitUI getHitUI;
+    public MessageUI messageUI;
 
     [Header("Elements")]
     public Transform enemy;

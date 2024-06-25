@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [Header("Elements")]
     public GameDirector gameDirector;
     public Weapon weapon;
+    public ObjectDetecter objectDetecter;
+
     //NOTE:
     //Mesh bu gameObject icin sahnedeki hacim alanini belirtir
     public Transform playerMesh;
@@ -34,6 +36,9 @@ public class Player : MonoBehaviour
         {
             GetHealed();
             collision.gameObject.SetActive(false);
+            gameDirector.fXManager.PlayHealCollectedFX(collision.transform.position);
+            gameDirector.audioManager.PlayHealSFX();
+
         }
     }
 

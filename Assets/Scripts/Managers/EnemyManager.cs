@@ -76,8 +76,8 @@ public class EnemyManager : MonoBehaviour
        }
 
        //NOTE:
-       //yuzde 50 sans ile calýsýr
-       if(Random.value < .5f) {
+       //settingsteki sans deegerine gore calýsýr
+       if(Random.value < gameDirector.settings.healSpawnChange) {
 
             SpawnPowerUp(enemy);
        }
@@ -88,6 +88,10 @@ public class EnemyManager : MonoBehaviour
     {
         var newPowerUp = Instantiate(healPowerUpPrefab);
         newPowerUp.transform.position = enemy.transform.position + Vector3.up;
+        //NOTE:
+        //rastgele bir force ile gameobject dusme goruntusu vermek icin
         newPowerUp.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-200, 200), 200, Random.Range(-200, 200)));
+       
+        newPowerUp.startPowerUp(gameDirector.playerHolder);
     }
 }

@@ -75,7 +75,7 @@ public class Weapon : MonoBehaviour
             {
                 SpawnBullet();
             }
-            player.PushPlayerBack();
+            //player.PushPlayerBack();
 
             if (settings.shootingAlarmEnemies){
                 player.gameDirector.enemyManager.AlertEnemies();

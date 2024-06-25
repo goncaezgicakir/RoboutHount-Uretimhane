@@ -14,9 +14,14 @@ public class GetHitUI : MonoBehaviour
         //sonra da alpha degerini(saydamlastirma) sifirla
 
         var canvasGroup = GetComponent<CanvasGroup>();
-        canvasGroup.DOKill();
-        canvasGroup.alpha = 0;
-        canvasGroup.DOFade(.1f, .2f).SetLoops(2, LoopType.Yoyo);
+        
+        if (canvasGroup != null)
+        {
+            canvasGroup.DOKill();
+            canvasGroup.alpha = 0;
+            canvasGroup.DOFade(.1f, .2f).SetLoops(2, LoopType.Yoyo);
+        }
+        
     }
 
 }
