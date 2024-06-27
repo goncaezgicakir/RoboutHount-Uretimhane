@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [Header("Elements")]
     public GameDirector gameDirector;
     public Weapon weapon;
-    public ObjectDetecter objectDetecter;
+    public ObjectDetector objectDetector;
 
     //NOTE:
     //Mesh bu gameObject icin sahnedeki hacim alanini belirtir
@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public int startHealth;
     private int _currentHealth;
     public bool isTouchingGround;
+    public bool isKeyCollected;
 
     public void StartPlayer()
     {
@@ -38,8 +39,19 @@ public class Player : MonoBehaviour
             collision.gameObject.SetActive(false);
             gameDirector.fXManager.PlayHealCollectedFX(collision.transform.position);
             gameDirector.audioManager.PlayHealSFX();
+        }
+        else if(collision.gameObject.CompareTag("Key"))
+        {
+            CollectKey();
+            collision.gameObject.SetActive(false);
 
         }
+    }
+
+    private void CollectKey()
+    {
+        isKeyCollected = true;
+        gameDirector.messageUI.ShowKeyImage();
     }
 
     private void GetHealed()

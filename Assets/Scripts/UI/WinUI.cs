@@ -8,7 +8,6 @@ public class WinUI : MonoBehaviour
 {
     [Header("Elements")]
     public GameDirector gameDirector;
-    public Image fillBar;
 
     public void Show()
     {
@@ -20,8 +19,9 @@ public class WinUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetPlayerHealthBar(float healthRatio)
+    public void LoadNextLevelButton()
     {
-        fillBar.fillAmount = healthRatio;
+        Hide();
+        SceneManager.LoadScene(gameDirector.desiredLevelIndex);
     }
 }

@@ -129,10 +129,24 @@ public class InputManager : MonoBehaviour
             //open door
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (gameDirector.playerHolder.objectDetecter.isTouchingDoor)
-                {
-                    gameDirector.playerHolder.objectDetecter.OpenDoor();
-                }
+                ObjectDetector objectDedector = gameDirector.playerHolder.objectDetector;
+
+                //oyuncu kapiya dokunuyorsa
+                if (objectDedector.isTouchingDoor) { 
+
+                    //kapi kilitli degilse ya da anahtar varsa
+                    //kapýyý ac
+                    if (!objectDedector.touchedDoor.isDoorLocked
+                        || gameDirector.playerHolder.isKeyCollected)
+                    {
+                        objectDedector.OpenDoor();
+                    }
+                    //yoksa uyari mesaji ver
+                    else
+                    {
+                        gameDirector.messageUI.ShowDoorIsLockedMessage();
+                    }
+                }   
             }
         }
     }

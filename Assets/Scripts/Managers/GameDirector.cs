@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
@@ -32,10 +33,22 @@ public class GameDirector : MonoBehaviour
     //default olarak boolean degeri false dur.
     public bool isGameStarted;
     public bool ingameControlsLocked;
-    
+    public int desiredLevelIndex;
+
 
     private void Start()
     {
+        print(SceneManager.GetActiveScene().buildIndex);
+        //NOTE:
+        //sahne(level) yukleme loopa girmesin diye kontrol eklenir
+        var currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+
+        if (currentLevelIndex != desiredLevelIndex)
+        {
+            //indexe gore olan sahne yuklenir
+            //index degeri build settings altinda yer alir
+            SceneManager.LoadScene(currentLevelIndex);
+        }
         ingameControlsLocked = true;
         mainUI.Show();
         winUI.Hide();
@@ -65,7 +78,9 @@ public class GameDirector : MonoBehaviour
         ingameControlsLocked = true;
         Cursor.lockState = CursorLockMode.None;
         winUI.Show();
-        healthBarUI.Hide(); 
+        healthBarUI.Hide();
+        //next level indexi guncellendi
+        desiredLevelIndex += 1;
     }
 
     public void LevelFailed()

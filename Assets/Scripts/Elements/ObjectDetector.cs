@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class ObjectDetecter : MonoBehaviour
+public class ObjectDetector : MonoBehaviour
 {
     [Header("Elements")]
     public GameDirector gameDirector;
@@ -29,12 +30,15 @@ public class ObjectDetecter : MonoBehaviour
         //ilk parametre cizecegi yeri, ikinci parametre ise yonu belirtir
         if (Physics.Raycast(transform.position + rayStartOffset, transform.forward, out hit, touchRange))
         {
-            if (hit.transform.CompareTag("Door"))
+            Door door = hit.transform.GetComponentInParent<Door>();
+
+            if (hit.transform.CompareTag("Door") &&
+                !(door.isDoorOpened))
             {
                 isTouchingDoor = true;
                 //NOTE:
                 //kapi kanatlari ebeveyn uzerinde oldugu icin parentini aldik
-                touchedDoor = hit.transform.GetComponentInParent<Door>();
+                touchedDoor = door;
                 gameDirector.messageUI.ShowOpenDoorMessage();
             }
             else
@@ -42,6 +46,7 @@ public class ObjectDetecter : MonoBehaviour
                 isTouchingDoor = false;
                 touchedDoor = null;
                 gameDirector.messageUI.HideOpenDoorMessage();
+                gameDirector.messageUI.HideDoorIsLockedMessage();
             }
         }
         else
@@ -49,11 +54,24 @@ public class ObjectDetecter : MonoBehaviour
             isTouchingDoor = false;
             touchedDoor = null;
             gameDirector.messageUI.HideOpenDoorMessage();
+            gameDirector.messageUI.HideDoorIsLockedMessage();
+
         }
     }
 
     public void OpenDoor()
     {
         touchedDoor.Open();
+
+        if(touchedDoor.isDoorLocked)
+        {
+            UseKey();
+        }
+    }
+
+    private void UseKey()
+    {
+        gameDirector.messageUI.HideKeyImage();
+        gameDirector.playerHolder.isKeyCollected = false;
     }
 }
