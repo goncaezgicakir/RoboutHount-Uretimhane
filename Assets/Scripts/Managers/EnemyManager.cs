@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
 {
     [Header("Elements")] 
     public GameDirector gameDirector;
-    public Transform placeHolderParent;
+    public Transform enemyPlaceHolderParent;
     public Enemy enemyPrefab;
     public PowerUp healPowerUpPrefab;
 
@@ -35,7 +35,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnWave()
     {
-        foreach (Transform ph in placeHolderParent)
+        foreach (Transform ph in enemyPlaceHolderParent)
         {
             SpawnEnemy(ph.position);
             ph.GetComponent<MeshRenderer>().enabled = false;

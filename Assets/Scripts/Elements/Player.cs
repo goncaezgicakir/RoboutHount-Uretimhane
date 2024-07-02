@@ -83,8 +83,19 @@ public class Player : MonoBehaviour
         }
     }
 
-   
+    public void ResetPosition()
+    {
+        transform.position = Vector3.zero;
+    }
+    public void ResetRigidbodyConstraints()
+    {
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+    }
 
+    public void FreezePlayerYAxis()
+    {
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+    }
 
     public void PlayerGotHit(int damage)
     {

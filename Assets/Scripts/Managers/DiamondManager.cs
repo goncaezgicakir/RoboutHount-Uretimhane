@@ -10,7 +10,7 @@ public class DiamondManager : MonoBehaviour
     public Transform diamondPlaceHolderParent;
 
 
-    private void Start()
+    public void StartDiamondManager()
     {
         foreach (Transform ph in diamondPlaceHolderParent)
         {

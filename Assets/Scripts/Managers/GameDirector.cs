@@ -9,6 +9,7 @@ public class GameDirector : MonoBehaviour
 {
     [Header("Managers")]
     public InputManager inputManager;
+    public LevelManager levelManager;
     public EnemyManager enemyManager;
     public DiamondManager diamondManager;
     public AudioManager audioManager;
@@ -22,6 +23,7 @@ public class GameDirector : MonoBehaviour
     public HealthBarUI healthBarUI;
     public GetHitUI getHitUI;
     public MessageUI messageUI;
+    public AdminUI adminUI;
 
     [Header("Elements")]
     public Transform enemy;
@@ -38,17 +40,6 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        print(SceneManager.GetActiveScene().buildIndex);
-        //NOTE:
-        //sahne(level) yukleme loopa girmesin diye kontrol eklenir
-        var currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-
-        if (currentLevelIndex != desiredLevelIndex)
-        {
-            //indexe gore olan sahne yuklenir
-            //index degeri build settings altinda yer alir
-            SceneManager.LoadScene(currentLevelIndex);
-        }
         ingameControlsLocked = true;
         mainUI.Show();
         winUI.Hide();
@@ -61,14 +52,18 @@ public class GameDirector : MonoBehaviour
        
     }
 
-    public void StartGame()
+    public void StartGame(int levelId)
     {
+        levelManager.ClearCurrentLevel();
+        levelManager.CreateLevel(levelId);
+        diamondManager.StartDiamondManager();
         Cursor.lockState = CursorLockMode.Locked;
         isGameStarted = true;
         enemyManager.SpawnWave();
         ingameControlsLocked = false;
         playerHolder.StartPlayer();
         healthBarUI.Show();
+        playerHolder.ResetRigidbodyConstraints();
     }
 
     
@@ -78,9 +73,7 @@ public class GameDirector : MonoBehaviour
         ingameControlsLocked = true;
         Cursor.lockState = CursorLockMode.None;
         winUI.Show();
-        healthBarUI.Hide();
-        //next level indexi guncellendi
-        desiredLevelIndex += 1;
+        healthBarUI.Hide();     
     }
 
     public void LevelFailed()
@@ -89,11 +82,12 @@ public class GameDirector : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         failUI.Show();
         healthBarUI.Hide();
+        //yeni level yuklenirken player gravityden kaynakli dusmesin
+        playerHolder.FreezePlayerYAxis();
     }
     
     public void DiamondCollected()
     {   
-        
          LevelCompleted();
     }
 

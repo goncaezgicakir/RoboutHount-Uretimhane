@@ -90,11 +90,11 @@ public class InputManager : MonoBehaviour
                 gameDirector.playerHolder.weapon.TryShoot();
             }
 
-            //close the game
+            //open admin panel
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                //open the mainUI when the game is closed
-                gameDirector.mainUI.Show();
+                //open the adminUI
+                gameDirector.adminUI.Show();
                 Cursor.lockState = CursorLockMode.None;
 
             }
@@ -106,12 +106,6 @@ public class InputManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 //cursor aktif olsun
                 Cursor.lockState = CursorLockMode.None;
-            }
-
-            //spawn an enemy
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                gameDirector.enemyManager.SpawnWave();
             }
 
             //make player faster

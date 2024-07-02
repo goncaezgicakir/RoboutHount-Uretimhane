@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class WinUI : MonoBehaviour
+public class AdminUI : MonoBehaviour
 {
     [Header("Elements")]
     public GameDirector gameDirector;
@@ -19,10 +18,14 @@ public class WinUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void LoadNextLevelButton()
+    //NOTE:
+    //bu method button uzerinde onClicked seceneginde eklendi
+    public void ResetProgressButtonPressed()
     {
         Hide();
-        gameDirector.playerHolder.ResetPosition();
-        gameDirector.mainUI.Show();
+        //player leveli 0a set edilerek oyunun resetlenir
+        PlayerPrefs.SetInt("PlayerLevel", 0);
+        //ilk level yuklenir
+        SceneManager.LoadScene (0);
     }
 }

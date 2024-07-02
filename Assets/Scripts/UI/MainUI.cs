@@ -19,9 +19,9 @@ public class MainUI : MonoBehaviour
 
     //NOTE:
     //bu method button uzerinde onClicked seceneginde eklendi
-    public void StartGameButtonPressed()
+    public void StartLevelButtonPressed(int levelId)
     {
         Hide();
-        gameDirector.StartGame();
+        gameDirector.StartGame(levelId);
     }
 }
