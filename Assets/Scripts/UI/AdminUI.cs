@@ -23,8 +23,6 @@ public class AdminUI : MonoBehaviour
     public void ResetProgressButtonPressed()
     {
         Hide();
-        //player leveli 0a set edilerek oyunun resetlenir
-        PlayerPrefs.SetInt("PlayerLevel", 0);
         //ilk level yuklenir
         SceneManager.LoadScene (0);
     }

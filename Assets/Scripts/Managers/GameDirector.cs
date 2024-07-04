@@ -35,7 +35,7 @@ public class GameDirector : MonoBehaviour
     //default olarak boolean degeri false dur.
     public bool isGameStarted;
     public bool ingameControlsLocked;
-    public int desiredLevelIndex;
+    public int currentlyPlayedLevel;
 
 
     private void Start()
@@ -54,6 +54,7 @@ public class GameDirector : MonoBehaviour
 
     public void StartGame(int levelId)
     {
+        currentlyPlayedLevel = levelId;
         levelManager.ClearCurrentLevel();
         levelManager.CreateLevel(levelId);
         diamondManager.StartDiamondManager();
@@ -73,7 +74,17 @@ public class GameDirector : MonoBehaviour
         ingameControlsLocked = true;
         Cursor.lockState = CursorLockMode.None;
         winUI.Show();
-        healthBarUI.Hide();     
+        healthBarUI.Hide();
+
+        //currently played leveldan bitirildiginde ulasilimis en buyuk leveldan buyuk ise 
+        //ulasilan en son level degerine set edilir
+        //bu kontrolun sebebi oyuncu eski levellara donup oynadiginda degerin degismemesi icin yapilir
+        if (currentlyPlayedLevel > PlayerPrefs.GetInt("LastFinishedLevel"))
+        {
+            PlayerPrefs.SetInt("LastFinishedLevel", currentlyPlayedLevel);
+            
+        }
+
     }
 
     public void LevelFailed()
@@ -84,6 +95,7 @@ public class GameDirector : MonoBehaviour
         healthBarUI.Hide();
         //yeni level yuklenirken player gravityden kaynakli dusmesin
         playerHolder.FreezePlayerYAxis();
+        
     }
     
     public void DiamondCollected()

@@ -100,10 +100,12 @@ public class InputManager : MonoBehaviour
             }
             //close the game
             if (Input.GetKeyDown(KeyCode.F5))
-            {
+            {   
+                //en son gectigimiz level id kaydedilir
+                PlayerPrefs.SetInt("LastFinishedLevel", 0);
                 //NOTE:
-                //aktif sahne restart edilir
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                //tek scene var, onu load etmek için index degeri olan 0 yazilir
+                SceneManager.LoadScene(0);
                 //cursor aktif olsun
                 Cursor.lockState = CursorLockMode.None;
             }
